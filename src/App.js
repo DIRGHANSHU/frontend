@@ -114,10 +114,20 @@ function App() {
         </div>
         <ul className="node-list">
           {nodes.map((n) => (
-            <li key={n.name} className={leader === n.name ? "leader-node" : ""}>
-              <span>{n.name}</span>
-              <span>{n.value}</span>
+            <li
+              key={n.name}
+              className={`node-item ${
+                leader === n.name ? "leader-node" : ""
+              } ${n.status === "Active" ? "active-node" : "offline-node"}`}
+            >
+              <span className="node-name">{n.name}</span>
+              <span className="node-value">{n.value}</span>
+              <span className={`node-status ${n.status === "Active" ? "active" : "offline"}`}>
               {leader === n.name && <span className="leader-badge">Leader</span>}
+                {n.status}
+                
+              </span>
+              
             </li>
           ))}
         </ul>
@@ -142,7 +152,10 @@ function App() {
 
         <ul className="vote-list">
           {Object.entries(votes).map(([candidate, count]) => (
-            <li key={candidate} className={leader === candidate ? "leader-node" : ""}>
+            <li
+              key={candidate}
+              className={`vote-item ${leader === candidate ? "leader-node" : ""}`}
+            >
               <div className="vote-info">
                 <span>{candidate}</span>
                 <span>{count} votes</span>
